@@ -47,12 +47,26 @@ def get_structured_dataset(listed_files):
     labeled_ds =  listed_files.map(process_path, num_parallel_calls = AUTOTUNE)
     return labeled_ds
 
+def split_dataset(labeled_ds, n_images):
+    labeled_ds.shuffle(buffer_size = 1000)
+    train_size = int(image_count * 0.7)
+    test_size = int(image_count * 0.3)
+    train_dataset = labeled_ds.take(train_size)
+    test_dataset =  labeled_ds.skip(train_size)
+    test_dataset =  labeled_ds.skip(test_size)
+    train_dataset = get_batches(train_dataset)
+    test_dataset = get_batches(test_dataset)
+    return train_dataset, test_dataset
+
+def get_batches(dataset, batch_size = 32, buffer_size = 1000):
+    return dataset.shuffle(buffer_size).batch(batch_size)
 
 def main():
     files = data_gen(path = DATA_PATH)
     print(CLASS_NAMES)
     labeled_ds = get_structured_dataset(files)
-    print(labeled_ds)
+    train_dataset, test_dataset = split_dataset(labeled_ds, image_count)
+    print(train_dataset)
 
 if __name__ == "__main__":
     main()
