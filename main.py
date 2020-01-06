@@ -4,7 +4,7 @@ from models.models import load_model
 from models.models import _get_compile 
 
 
-
+SAVE_PATH = 'models/resnet50_food101.h5'
 def main():
     #CLASS NAMES AND number of images definition 
     DATA_PATH = 'data/'
@@ -31,7 +31,7 @@ def main():
     history = model.fit(train_dataset,
         epochs=initial_epochs,
         validation_data=test_dataset)
-
+    model.save(SAVE_PATH)
 
 if __name__ == "__main__":
     main()
