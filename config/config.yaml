@@ -1,0 +1,4 @@
+BASE:
+  DATA_PATH: 'data/'
+  IMG_WIDTH: 224
+  IMG_HEIGHT: 224
