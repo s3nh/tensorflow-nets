@@ -24,12 +24,13 @@ def load_model(IMG_SHAPE= (224, 224, 3)):
    ])
    return model
 
-
 def _get_compile(model, config ):
    f_base_learning_rate = config['BASE']['learning_rate']    
    f_metrics = config['BASE']['metrics']
    f_loss = config['BASE']['loss']
-   optim = tf.keras.optimizers.RMSProp(lr = f_base_learning_rate)
+   optim = tf.keras.optimizers.RMSProp(lr = f_base_learning_rate, 
+  )
+   return f_base_learning_rate, f_metrics, f_loss, optim
 
 
 def main():
